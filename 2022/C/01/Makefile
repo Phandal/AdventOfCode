@@ -1,0 +1,16 @@
+CC = clang
+CFLAGS = -Wall -Wextra
+DEBUG = -g
+
+all:
+	@echo Please choose Part1 or Part2
+
+part1: clean part1.c
+	$(CC) $(CFLAGS) $(DEBUG) part1.c -o $@
+
+part2: clean part2.c
+	$(CC) $(CFLAGS) $(DEBUG) part2.c -o $@
+
+.PHONY: clean
+clean:
+	-@rm part1 part2
