@@ -2,7 +2,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Part1 {
+public class Part2 {
+  private static void bubble_sort(int maxes[]) {
+    return;
+  }
+  
   public static void main(String args[]) {
     try {
 
@@ -15,7 +19,7 @@ public class Part1 {
       File f = new File(filename);
       Scanner fileReader = new Scanner(f);
       int lineTotal = 0;
-      int max = 0;
+      int max[] = new int[4];
 
       while(fileReader.hasNext()) {
         try {
@@ -23,18 +27,17 @@ public class Part1 {
           int line = Integer.parseInt(fileReader.nextLine());
           lineTotal += line;
         } catch (NumberFormatException nfe) {
-          if (lineTotal > max) {
-            max = lineTotal;
-          }
+          max[3] = lineTotal;
+          bubble_sort(max);
           lineTotal = 0;
         }
       }
 
       fileReader.close();
 
-      System.out.printf("Max: %d\n", max);
+      System.out.printf("Max Total: %d\n", (max[0] + max[1] + max[2]));
       if (filename.equals("test_input.txt")) {
-        assert max == 24000 : "Incorrect Answer";
+        assert (max[0] + max[1] + max[2]) == 45000 : "Incorrect Answer";
         System.out.println("Test Passed!");
       }
     } catch (FileNotFoundException fnfe) {
