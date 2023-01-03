@@ -10,7 +10,7 @@
 
 #define MAX_SIZE 4096
 #define TEST_INPUT_FILENAME "test_input.txt"
-#define TEST_INPUT_ANSWER 7
+#define TEST_INPUT_ANSWER 19
 
 int main(int argc, char** argv) {
   // File Reading Operations
@@ -20,14 +20,42 @@ int main(int argc, char** argv) {
     return -1;
   }
 
-  char* input = malloc(MAX_SIZE);
-  long result = 0;
+  char message_input[14] = {'\0'};
+  long result = 1;
+  char letter;
+  puts("Running...");
 
-  while(fgets(input, MAX_SIZE, fd)) {
-    input[strlen(input) - 1] = '\0';
+  letter = fgetc(fd);
+  while(letter != '\n') {
 
     // This is where you start writing code for each challenge
 
+    for (int i = 1; i <= 14; i++) {
+      message_input[i - 1] = message_input[i];
+    }
+    message_input[13] = letter;
+
+    letter = fgetc(fd);
+    if (result <= 14) {
+      result++;
+      continue;
+    }
+
+    bool start_packet = true;
+    for (int i = 0; i < 14; i++) {
+      for (int j = 0; j < 14; j++) {
+        // printf("input[i]: %c\ti: %i\tinput[j]: %c\tj: %i\n", message_input[i], i, message_input[j], j);
+        if (message_input[i] == message_input[j] && i != j) {
+          start_packet = false;
+        }
+      }
+    }
+
+    if (start_packet) {
+      break;
+    }
+    result++;
+    
   }
 
   printf("Result: %li\n", result);
@@ -35,7 +63,6 @@ int main(int argc, char** argv) {
   // This is where you stop write code
 
   // Put cleanup code here
-  free(input);
   fclose(fd);
 
   // Test Case Here
